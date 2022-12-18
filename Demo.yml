@@ -1,0 +1,203 @@
+openapi: 3.0.1
+info:
+  title: Demo 
+  description: API Demo
+  contact: {}
+  version: 1.0.0
+servers:
+- url: http://127.0.0.1:4028
+tags:
+- name: Demos
+  description: Demo Controller
+paths:
+  /producto/guardar:
+    post:
+      tags:
+      - Producto
+      summary: Guardar Producto
+      operationId: guardarProductoPost
+      requestBody:
+        description: servicio de alta de productos
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Producto'
+        required: true
+      responses:
+        200:
+          description: Successfully process
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        404:
+          description: Datos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        500:
+          description: Error de sistemas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+      x-codegen-request-body-name: in 
+  /producto/actualizar:
+    put:
+      tags:
+      - Producto
+      summary: Actualizar Producto
+      operationId: actualizarProducto
+      requestBody:
+        description: servicio para actualizar producto por id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Producto'
+        required: true
+      responses:
+        200:
+          description: Successfully process
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        404:
+          description: Datos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        500:
+          description: Error de sistema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+      x-codegen-request-body-name: in 
+  /producto/eliminar:
+    delete:
+      tags:
+      - Producto
+      summary: Elimina un Producto por su id
+      parameters: 
+        - name: idProducto
+          in: query
+          schema:
+            type: string
+            example: "1"
+      operationId: eliminarProducto
+      responses:
+        200:
+          description: Successfully process
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        404:
+          description: Datos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        500:
+          description: Error de sistema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+      x-codegen-request-body-name: in 
+  /producto:
+    get:
+      tags:
+      - Producto
+      summary: Obtiene todos los Productos
+      operationId: obtenerProductos
+      responses:
+        200:
+          description: Successfully process
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductoArray'
+        404:
+          description: Datos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        500:
+          description: Error de sistema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+      x-codegen-request-body-name: in 
+
+  /producto/porId:
+    get:
+      tags:
+      - Producto
+      summary: Obtiene todos los Productos
+      parameters: 
+        - name: idProducto
+          in: query
+          schema:
+            type: string
+            example: "1"
+      operationId: obtenerProductoPorId
+      responses:
+        200:
+          description: Successfully process
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Producto'
+        404:
+          description: Datos encontrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+        500:
+          description: Error de sistema
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+      x-codegen-request-body-name: in 
+components:
+  schemas:
+    Producto:
+      type: object
+      properties:
+        idProducto:
+          type: string
+          example: "1"
+        nombre:
+          type: string
+          example: "nombre"
+        descripcion:
+          type: string
+          example: "descripción"
+        modelo:
+          type: string
+          example: "modelo"
+        precio:
+          type: number
+          example: 1.0
+    ProductoArray:
+      type: array
+      items: 
+        $ref: '#/components/schemas/Producto'
+    ResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+        status:
+          type: string
+        statusText:
+          type: string
+          
